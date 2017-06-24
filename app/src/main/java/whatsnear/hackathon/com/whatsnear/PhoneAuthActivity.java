@@ -74,7 +74,10 @@ public class PhoneAuthActivity extends AppCompatActivity implements
         if (savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);
         }
-
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            startActivity(new Intent(this, MainActivity2.class));
+        }
         // Assign views
         mPhoneNumberViews = (ViewGroup) findViewById(R.id.phone_auth_fields);
         mSignedInViews = (ViewGroup) findViewById(R.id.signed_in_buttons);
@@ -248,6 +251,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                             FirebaseUser user = task.getResult().getUser();
                             // [START_EXCLUDE]
                             updateUI(STATE_SIGNIN_SUCCESS, user);
+                            startActivity(new Intent(PhoneAuthActivity.this, MainActivity2.class));
                             // [END_EXCLUDE]
                         } else {
                             // Sign in failed, display a message and update the UI
@@ -280,6 +284,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             updateUI(STATE_SIGNIN_SUCCESS, user);
+            startActivity(new Intent(PhoneAuthActivity.this, MainActivity2.class));
         } else {
             updateUI(STATE_INITIALIZED);
         }
@@ -356,7 +361,6 @@ public class PhoneAuthActivity extends AppCompatActivity implements
 
             mStatusText.setText(R.string.signed_in);
             mDetailText.setText(getString(R.string.firebase_status_fmt, user.getUid()));
-            startActivity(new Intent(this, MainActivity.class));
         }
     }
 

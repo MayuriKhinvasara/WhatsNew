@@ -8,6 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        String data = getIntent().getStringExtra("DATA");
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         tAdapter = new TweetAdapter(tweetList);
@@ -35,33 +39,34 @@ public class MainActivity extends AppCompatActivity {
         //recyclerView.setAdapter(mAdapter);
         recyclerView.setAdapter(tAdapter);
 
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Tweet tweet = tweetList.get(position);
-                //Toast.makeText(getApplicationContext(), movie.getTitle() + " is selected!", Toast.LENGTH_SHORT).show();
-            }
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView,
+                new RecyclerTouchListener.ClickListener() {
+                    @Override
+                    public void onClick(View view, int position) {
+                        Tweet tweet = tweetList.get(position);
+                        //Toast.makeText(getApplicationContext(), movie.getTitle() + " is selected!", Toast.LENGTH_SHORT).show();
+                    }
 
-            @Override
-            public void onLongClick(View view, int position) {
+                    @Override
+                    public void onLongClick(View view, int position) {
 
-            }
-        }));
+                    }
+                }));
 
-        prepareTweetData();
+        prepareTweetData(data);
     }
 
-    private void prepareTweetData(){
-        Tweet tweet = new Tweet("jhagdjfdsf","2017","@jdhgf");
-        tweetList.add(tweet);
-         tweet = new Tweet("jhagdjfdsf","2017","@fgf");
-        tweetList.add(tweet);
-         tweet = new Tweet("jhagdjfdsf","2017","@wefdsfv");
-        tweetList.add(tweet);
-         tweet = new Tweet("jhagdjfdsf","2017","@sfgdg");
-        tweetList.add(tweet);
+    private void prepareTweetData(String data) {
+        Tweet tweet;
+        try {
+            JSONArray array = new JSONArray(data);
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject string = (JSONObject) array.get(i);
+                tweet = new Tweet(string.getString("text"), string.getString("time"), string.getString("name"));
+                tweetList.add(tweet);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
-
-    
-
 }
