@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "860104975943",
+    "firebase_url": "https://endless-datum-171706.firebaseio.com",
+    "project_id": "endless-datum-171706",
+    "storage_bucket": "endless-datum-171706.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860104975943:android:617ac31f9020ec8a",
+        "android_client_info": {
+          "package_name": "whatsnear.hackathon.com.whatsnear"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "860104975943-59k5i0684315hgpp8iqvbl3chgg0oq3p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrr55AMmmqx-RoZS90ORCgIFZoQ3L-IeM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
