@@ -2,75 +2,66 @@ package whatsnear.hackathon.com.whatsnear;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
-
-import com.google.firebase.analytics.FirebaseAnalytics;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
-
-    // List view
-    private ListView lv;
-
-    // Listview Adapter
-    ArrayAdapter<String> adapter;
-
-    // Search EditText
-    EditText inputSearch;
-    private FirebaseAnalytics mFirebaseAnalytics;
-
-    // ArrayList for Listview
-    ArrayList<HashMap<String, String>> productList;
+    private List<Tweet> tweetList = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private TweetAdapter tAdapter;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        // Listview Data
-        String products[] = {"Dell Inspiron", "HTC One X", "HTC Wildfire S", "HTC Sense", "HTC Sensation XE",
-                "iPhone 4S", "Samsung Galaxy Note 800",
-                "Samsung Galaxy S3", "MacBook Air", "Mac Mini", "MacBook Pro"};
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
-        lv = (ListView) findViewById(R.id.list_view);
-        inputSearch = (EditText) findViewById(R.id.inputSearch);
+        tAdapter = new TweetAdapter(tweetList);
 
-        // Adding items to listview
-        adapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.product_name, products);
-        lv.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        //recyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(tAdapter);
 
-
-        inputSearch.addTextChangedListener(new TextWatcher() {
-
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
-            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
-                // When user changed the Text
-                MainActivity.this.adapter.getFilter().filter(cs);
+            public void onClick(View view, int position) {
+                Tweet tweet = tweetList.get(position);
+                //Toast.makeText(getApplicationContext(), movie.getTitle() + " is selected!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-                    int arg3) {
-                // TODO Auto-generated method stub
+            public void onLongClick(View view, int position) {
 
             }
+        }));
 
-            @Override
-            public void afterTextChanged(Editable arg0) {
-                // TODO Auto-generated method stub
-            }
-        });
-
-
+        prepareTweetData();
     }
 
+    private void prepareTweetData(){
+        Tweet tweet = new Tweet("jhagdjfdsf","2017","@jdhgf");
+        tweetList.add(tweet);
+         tweet = new Tweet("jhagdjfdsf","2017","@fgf");
+        tweetList.add(tweet);
+         tweet = new Tweet("jhagdjfdsf","2017","@wefdsfv");
+        tweetList.add(tweet);
+         tweet = new Tweet("jhagdjfdsf","2017","@sfgdg");
+        tweetList.add(tweet);
+    }
+
+    
 
 }

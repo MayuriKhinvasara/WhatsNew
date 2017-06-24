@@ -1,5 +1,6 @@
 package whatsnear.hackathon.com.whatsnear;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -16,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseTooManyRequestsException;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -61,12 +63,13 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     private Button mVerifyButton;
     private Button mResendButton;
     private Button mSignOutButton;
+    protected FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_auth);
-
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         // Restore instance state
         if (savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);
@@ -340,7 +343,8 @@ public class PhoneAuthActivity extends AppCompatActivity implements
             mPhoneNumberViews.setVisibility(View.VISIBLE);
             mSignedInViews.setVisibility(View.GONE);
 
-            mStatusText.setText(R.string.signed_out);;
+            mStatusText.setText(R.string.signed_out);
+            ;
         } else {
             // Signed in
             mPhoneNumberViews.setVisibility(View.GONE);
@@ -352,6 +356,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
 
             mStatusText.setText(R.string.signed_in);
             mDetailText.setText(getString(R.string.firebase_status_fmt, user.getUid()));
+            startActivity(new Intent(this, MainActivity.class));
         }
     }
 
