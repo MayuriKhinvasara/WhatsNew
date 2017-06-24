@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "860104975943-pm0hhivjg7e4buro67bsjuvq98f275kt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "whatsnear.hackathon.com.whatsnear",
+            "certificate_hash": "251f28483291a563484ec23aaa04ee7c29624bff"
+          }
+        },
+        {
           "client_id": "860104975943-59k5i0684315hgpp8iqvbl3chgg0oq3p.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "860104975943-59k5i0684315hgpp8iqvbl3chgg0oq3p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
