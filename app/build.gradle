@@ -35,6 +35,6 @@ dependencies {
 
     // Firebase Authentication
     compile 'com.google.firebase:firebase-auth:11.0.1'
-
+    compile 'com.squareup.okhttp3:okhttp:3.8.1'
 }
 apply plugin: 'com.google.gms.google-services'
